@@ -1,7 +1,7 @@
-import { useContext, useEffect,  useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-simple-captcha';
 import { AuthContext } from '../../provider/AuthProvider';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import Swal from 'sweetalert2'
 
@@ -12,9 +12,12 @@ const Login = () => {
 
 
     const [disabled, setDisabled] = useState(true);
-
-
     const { signIn } = useContext(AuthContext);
+    const navigate = useNavigate();
+    const location = useLocation();
+
+
+    const from = location.state?.from?.pathname || "/";
 
 
     useEffect(() => {
@@ -37,8 +40,10 @@ const Login = () => {
                     title: "Login Successfully",
                     text: "Enjoy the food",
                     icon: "success"
-                  });
-            })
+                });
+                navigate(from, { replace: true });
+            });
+
     }
 
 
@@ -83,7 +88,8 @@ const Login = () => {
                                 <input onBlur={handleValidateCaptcha} type="text" name="captcha" placeholder="type the captcha above" className="input input-bordered" required />
                             </div>
                             <div className="form-control mt-6">
-                                <input disabled={disabled} className="btn btn-primary" type="submit" value="Login" />
+                                {/* apply disabled for captcha */}
+                                <input disabled={false} className="btn btn-primary" type="submit" value="Login" />
                             </div>
                         </form>
                         <p><small>New Here? <Link to="/signup">SignUp</Link></small></p>
