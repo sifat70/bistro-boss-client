@@ -1,6 +1,8 @@
 import Swal from "sweetalert2";
 import useAuth from "../../hooks/useAuth";
 import { useLocation, useNavigate } from "react-router-dom";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import useCart from "../../hooks/useCart";
 
 
 const FoodCard = ({ item }) => {
@@ -8,6 +10,8 @@ const FoodCard = ({ item }) => {
     const { user } = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
+    const axiosSecure = useAxiosSecure();
+    const [, refetch] = useCart();
 
 
 
@@ -22,6 +26,22 @@ const FoodCard = ({ item }) => {
                 image,
                 price
             }
+
+            axiosSecure.post('/carts', cartItem)
+                .then(res => {
+                    console.log(res.data)
+                    if (res.data.insertedId) {
+                        Swal.fire({
+                            position: "top-center",
+                            icon: "success",
+                            title: `${name} added your cart`,
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                        // refetch cart to update the cart items count
+                        refetch()
+                    }
+                })
         }
         else {
             Swal.fire({
@@ -34,8 +54,8 @@ const FoodCard = ({ item }) => {
                 confirmButtonText: "Yes, login!"
             }).then((result) => {
                 if (result.isConfirmed) {
-                    navigate('/login', {state: {from: location}})
-                   
+                    navigate('/login', { state: { from: location } })
+
                 }
             });
         }
@@ -48,7 +68,7 @@ const FoodCard = ({ item }) => {
                 <h2 className="card-title flex justify-center">{name}</h2>
                 <p>{recipe}</p>
                 <div className="card-actions justify-center">
-                    <button onClick={() => handleAddCart(item)} className="btn btn-outline border-0 bg-slate-100 border-yellow-500 border-b-4 mt-4">Add to cart</button>
+                    <button onClick={handleAddCart} className="btn btn-outline border-0 bg-slate-100 border-yellow-500 border-b-4 mt-4">Add to cart</button>
                 </div>
             </div>
         </div>
