@@ -1,4 +1,4 @@
-import { FaAd, FaCalendar, FaEnvelope, FaHome, FaList, FaSearch, FaShoppingCart } from "react-icons/fa";
+import { FaAd, FaBook, FaCalendar, FaEnvelope, FaHome, FaList, FaSearch, FaShoppingCart, FaUsers, FaUtensils } from "react-icons/fa";
 import { NavLink, Outlet } from "react-router-dom";
 import useCart from "../hooks/useCart";
 
@@ -16,6 +16,36 @@ const Dashboard = () => {
                 <ul className="menu p-4">
                     {
                         isAdmin ? <>
+                            <li>
+                                <NavLink to="/dashboard/adminHome">
+                                    <FaHome></FaHome>
+                                    Admin Home
+                                </NavLink>
+                            </li>
+                            <li>
+                                <NavLink to="/dashboard/addItems">
+                                    <FaUtensils></FaUtensils>
+                                    Add Items
+                                </NavLink>
+                            </li>
+                            <li>
+                                <NavLink to="/dashboard/managedItems">
+                                    <FaList></FaList>
+                                    Managed Items
+                                </NavLink>
+                            </li>
+                            <li>
+                                <NavLink to="/dashboard/bookings">
+                                    <FaBook></FaBook>
+                                    Managed Bookings
+                                </NavLink>
+                            </li>
+                            <li>
+                                <NavLink to="/dashboard/users">
+                                    <FaUsers></FaUsers>
+                                    All Users
+                                </NavLink>
+                            </li>
                         </>
                             :
                             <>

@@ -41,7 +41,7 @@ const Cart = () => {
         <div>
             <div className="flex justify-evenly mb-8">
                 <h2 className="text-4xl ">Items: {cart.length}</h2>
-                <h2 className="text-4xl ">Total Prices: {totalPrices}</h2>
+                <h2 className="text-4xl ">Total Prices: $ {totalPrices}</h2>
                 <button className="btn btn-primary">Pay</button>
             </div>
             <div className="overflow-x-auto">
